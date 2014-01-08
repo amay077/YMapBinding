@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YMapBinding", "YMapBinding\YMapBinding.csproj", "{F7608A90-B3DE-4067-8A59-D4B47DF928C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YMapApp", "YMapApp\YMapApp.csproj", "{64482E28-25D7-47EF-A726-DF764695FC95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{64482E28-25D7-47EF-A726-DF764695FC95}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{64482E28-25D7-47EF-A726-DF764695FC95}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Debug|iPhone.Build.0 = Debug|iPhone
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Release|Any CPU.Build.0 = Release|iPhoneSimulator
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Release|iPhone.ActiveCfg = Release|iPhone
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Release|iPhone.Build.0 = Release|iPhone
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{64482E28-25D7-47EF-A726-DF764695FC95}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Release|iPhone.Build.0 = Release|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{F7608A90-B3DE-4067-8A59-D4B47DF928C1}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = YMapApp\YMapApp.csproj
+	EndGlobalSection
+EndGlobal
