@@ -21,6 +21,16 @@ namespace YMapApp
 //            var i = 0;
             return view;
         }
+
+//		public override YMKAnnotationView ViewForAnnotation(YMKMapView mapView, YMKAnnotation annotation)
+//		{
+//			int a = 0;
+//			return new YMKAnnotationView();
+//		}
+
+		public override void RegionDidChangeAnimated(YMKMapView sender, bool animated)
+		{
+		}
     }
 }
 

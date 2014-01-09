@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Drawing;
 using MonoTouch.ObjCRuntime;
 using MonoTouch.Foundation;
@@ -7,9 +7,9 @@ using MonoTouch.CoreLocation;
 
 namespace YMapBinding
 {
-    [BaseType (typeof (NSObject))]
+	[BaseType (typeof (NSObject))]
+	[Model, Protocol]
     public partial interface YMKAnnotation {
-
         [Export ("coordinate")]
         CLLocationCoordinate2D Coordinate { get; set; }
 
@@ -20,7 +20,8 @@ namespace YMapBinding
         string Subtitle { get; }
     }
 
-    [BaseType (typeof (YMKAnnotation))]
+	[BaseType (typeof (YMKAnnotation))]
+	[Model, Protocol]
     public partial interface YMKOverlay : YMKAnnotation {
 
 //        [Export ("coordinate")]
@@ -34,6 +35,7 @@ namespace YMapBinding
     }
 
     [BaseType (typeof (YMKOverlay))]
+	[Model]
     public partial interface YMKWeatherOverlay : YMKOverlay {
 
 //        [Export ("coordinate")]
@@ -65,8 +67,11 @@ namespace YMapBinding
         [Wrap ("WeakDelegate")][NullAllowed]
         YMKMapViewDelegate Delegate { get; set; }
 
-        [Export ("addOverlay:")]
-        void AddOverlay (YMKOverlay overlay);
+		[Export ("addOverlay:")]
+		void AddOverlay (YMKOverlay overlay);
+
+		[Export ("addAnnotation:")]
+		void AddAnnotation (YMKAnnotation annotation);
     }
 
     public class RegionDidChangeAnimatedEventArgs
@@ -87,6 +92,9 @@ namespace YMapBinding
         [Export ("mapView:viewForOverlay:"), DelegateName ("ViewForOverlay"), DefaultValue(null)]
         YMKOverlayView ViewForOverlay (YMKMapView mapView, YMKOverlay overlay);
 
+		//-(YMKAnnotationView *)mapView:(YMKMapView *)mapView viewForAnnotation:(id <YMKAnnotation>)annotation
+		[Export ("mapView:viewForAnnotation:"), DelegateName ("ViewForAnnotation"), DefaultValue(null)]
+		YMKAnnotationView ViewForAnnotation (YMKMapView mapView, YMKAnnotation annotation);
     }
 
 
@@ -139,6 +147,11 @@ namespace YMapBinding
         [Export ("changeZLevel:")]
         void ChangeZLevel (int z);
     }
+
+	[BaseType (typeof (NSObject))]
+	public partial interface YMKAnnotationView {
+	}
+
 
     [BaseType (typeof (YMKTileOverlayView))]
     public partial interface YMKWeatherOverlayView {

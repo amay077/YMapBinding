@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿﻿﻿﻿using System;
 using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -27,7 +27,7 @@ namespace YMapApp
         {
             base.ViewDidLoad();
             
-            var v = new YMKMapView(new RectangleF(0f, 0f, 320f, 320f), 
+			var v = new YMKMapView(new RectangleF(new PointF(0f, 0f), this.View.Frame.Size), 
                 "dj0zaiZpPWR2b2IyRmRsRzdrMSZzPWNvbnN1bWVyc2VjcmV0Jng9MzU-");
 
             v.CenterCoordinate = new CLLocationCoordinate2D(35.180188, 136.906565); 
@@ -42,6 +42,10 @@ namespace YMapApp
             v.AddOverlay(weartherOvr);
 
             this.View.AddSubview(v);
+
+			var annotation = new MyAnnotation(new CLLocationCoordinate2D(35.180188, 136.906565), "たいとる", "サブタイトル");
+			v.AddAnnotation(annotation);
+//			v.AddAnnotation(null);
         }
 
         public override void ViewWillAppear(bool animated)
