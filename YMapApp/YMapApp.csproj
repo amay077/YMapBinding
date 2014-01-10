@@ -93,28 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
-    <BundleResource Include="Resources\image\compass48.png" />
-    <BundleResource Include="Resources\image\compass48%402x.png" />
-    <BundleResource Include="Resources\image\goal.png" />
-    <BundleResource Include="Resources\image\goal%402x.png" />
-    <BundleResource Include="Resources\image\pin_green_s.png" />
-    <BundleResource Include="Resources\image\pin_green_s%402x.png" />
-    <BundleResource Include="Resources\image\pin_head_l.png" />
-    <BundleResource Include="Resources\image\pin_head_s.png" />
-    <BundleResource Include="Resources\image\pin_purple_s.png" />
-    <BundleResource Include="Resources\image\pin_purple_s%402x.png" />
-    <BundleResource Include="Resources\image\pin_red_s.png" />
-    <BundleResource Include="Resources\image\pin_red_s%402x.png" />
-    <BundleResource Include="Resources\image\purple_arrow.png" />
-    <BundleResource Include="Resources\image\route_goal_pin.png" />
-    <BundleResource Include="Resources\image\route_goal_pin%402x.png" />
-    <BundleResource Include="Resources\image\route_pin.png" />
-    <BundleResource Include="Resources\image\route_pin%402x.png" />
-    <BundleResource Include="Resources\image\route_start_pin.png" />
-    <BundleResource Include="Resources\image\route_start_pin%402x.png" />
-    <BundleResource Include="Resources\image\via.png" />
-    <BundleResource Include="Resources\image\via%402x.png" />
-    <BundleResource Include="Resources\image\yback.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -127,8 +105,6 @@
     <Compile Include="YMapAppViewController.designer.cs">
       <DependentUpon>YMapAppViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyYMKMapViewDelegate.cs" />
-    <Compile Include="MyAnnotation.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainStoryboard.storyboard" />
@@ -139,8 +115,9 @@
       <Project>{F7608A90-B3DE-4067-8A59-D4B47DF928C1}</Project>
       <Name>YMapBinding</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\image\" />
+    <ProjectReference Include="..\YMapBindingExtention\YMapBindingExtention.csproj">
+      <Project>{656CDB72-8275-46E8-87E5-21ECF8588D85}</Project>
+      <Name>YMapBindingExtention</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

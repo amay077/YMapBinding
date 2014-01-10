@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Drawing;
 using MonoTouch.ObjCRuntime;
 using MonoTouch.Foundation;
@@ -7,6 +7,68 @@ using MonoTouch.CoreLocation;
 
 namespace YMapBinding
 {
+
+    #region delegates
+
+
+    [Model, BaseType (typeof (NSObject))]
+    public partial interface YMKMapViewDelegate {
+
+        [Export ("mapView:regionDidChangeAnimated:"), EventArgs ("RegionDidChangeAnimated"), ]
+        void RegionDidChangeAnimated (YMKMapView sender, bool animated);
+
+        [Export ("mapView:viewForOverlay:"), DelegateName ("ViewForOverlay"), DefaultValue(null)]
+        YMKOverlayView ViewForOverlay (YMKMapView mapView, YMKOverlay overlay);
+
+        //-(YMKAnnotationView *)mapView:(YMKMapView *)mapView viewForAnnotation:(id <YMKAnnotation>)annotation
+        [Export ("mapView:viewForAnnotation:"), DelegateName ("ViewForAnnotation"), DefaultValue(null)]
+        YMKAnnotationView ViewForAnnotation (YMKMapView mapView, YMKAnnotation annotation);
+    }
+
+    [Model, BaseType (typeof (NSObject))]
+    public partial interface YMKRouteOverlayDelegate {
+
+        [Export ("finishRouteSearch:")]
+        void FinishRouteSearch (YMKRouteOverlay routeOverlay);
+
+        [Export ("errorRouteSearch:withError:")]
+        void WithError (YMKRouteOverlay routeOverlay, int error);
+    }
+
+//    [Model, BaseType (typeof (NSObject))]
+//    public partial interface YMKNaviControllerDelegate {
+//
+//        [Export ("naviController:didUpdateUserLocation:")]
+//        void DidUpdateUserLocation (YMKNaviController naviController, YMKUserLocation userLocation);
+//
+//        [Export ("naviController:didFailToLocateUserWithError:")]
+//        void DidFailToLocateUserWithError (YMKNaviController naviController, NSError error);
+//
+//        [Export ("naviControllerAccuracyBad:didUpdateUserLocation:")]
+//        void DidUpdateUserLocation (YMKNaviController naviController, YMKUserLocation userLocation);
+//
+//        [Export ("naviControllerRouteOut:didUpdateUserLocation:")]
+//        void DidUpdateUserLocation (YMKNaviController naviController, YMKUserLocation userLocation);
+//
+//        [Export ("naviControllerOnGoal:didUpdateUserLocation:")]
+//        void DidUpdateUserLocation (YMKNaviController naviController, YMKUserLocation userLocation);
+//    }
+
+    #endregion
+
+    #region events
+
+    public class RegionDidChangeAnimatedEventArgs
+    {
+        public RegionDidChangeAnimatedEventArgs (bool animated)
+        {
+            this.Animated = animated;
+        }
+        public bool Animated { get; set; }
+    }
+
+    #endregion
+
 	[BaseType (typeof (NSObject))]
 	[Model, Protocol]
     public partial interface YMKAnnotation {
@@ -74,30 +136,6 @@ namespace YMapBinding
 		void AddAnnotation (YMKAnnotation annotation);
     }
 
-    public class RegionDidChangeAnimatedEventArgs
-    {
-        public RegionDidChangeAnimatedEventArgs (bool animated)
-        {
-            this.Animated = animated;
-        }
-        public bool Animated { get; set; }
-    }
-
-    [Model, BaseType (typeof (NSObject))]
-    public partial interface YMKMapViewDelegate {
-       
-        [Export ("mapView:regionDidChangeAnimated:"), EventArgs ("RegionDidChangeAnimated"), ]
-        void RegionDidChangeAnimated (YMKMapView sender, bool animated);
-
-        [Export ("mapView:viewForOverlay:"), DelegateName ("ViewForOverlay"), DefaultValue(null)]
-        YMKOverlayView ViewForOverlay (YMKMapView mapView, YMKOverlay overlay);
-
-		//-(YMKAnnotationView *)mapView:(YMKMapView *)mapView viewForAnnotation:(id <YMKAnnotation>)annotation
-		[Export ("mapView:viewForAnnotation:"), DelegateName ("ViewForAnnotation"), DefaultValue(null)]
-		YMKAnnotationView ViewForAnnotation (YMKMapView mapView, YMKAnnotation annotation);
-    }
-
-
     [BaseType (typeof (UIView))]
     public partial interface YMKOverlayView {
 
@@ -150,7 +188,63 @@ namespace YMapBinding
 
 	[BaseType (typeof (NSObject))]
 	public partial interface YMKAnnotationView {
-	}
+        [Export ("initWithAnnotation:reuseIdentifier:")]
+        IntPtr Constructor (YMKAnnotation wkannotation, string _reuseIdentifier);
+
+        [Export ("resetAnnotaion")]
+        void ResetAnnotaion ();
+
+        [Export ("rotateTransform:")]
+        void RotateTransform (double radian);
+
+        [Export ("reuseIdentifier")]
+        string ReuseIdentifier { get; }
+
+        [Export ("prepareForReuse")]
+        void PrepareForReuse ();
+
+        [Export ("annotation", ArgumentSemantic.Retain)]
+        YMKAnnotation Annotation { get; set; }
+
+        [Export ("image", ArgumentSemantic.Retain)]
+        UIImage Image { get; set; }
+
+        [Export ("centerOffset")]
+        PointF CenterOffset { get; set; }
+
+        [Export ("calloutOffset")]
+        PointF CalloutOffset { get; set; }
+
+        [Export ("enabled")]
+        bool Enabled { [Bind ("isEnabled")] get; set; }
+
+        [Export ("highlighted")]
+        bool Highlighted { [Bind ("isHighlighted")] get; set; }
+
+        [Export ("selected")]
+        bool Selected { [Bind ("isSelected")] get; set; }
+
+        [Export ("setSelected:animated:")]
+        void SetSelected (bool selected, bool animated);
+
+        [Export ("canShowCallout")]
+        bool CanShowCallout { get; set; }
+
+        [Export ("leftCalloutAccessoryView", ArgumentSemantic.Retain)]
+        UIView LeftCalloutAccessoryView { get; set; }
+
+        [Export ("rightCalloutAccessoryView", ArgumentSemantic.Retain)]
+        UIView RightCalloutAccessoryView { get; set; }
+
+        [Export ("setImageShadow:withCenterOffset:")]
+        void SetImageShadow (UIImage imageShadow, PointF offset);
+
+        [Export ("popBackVisible")]
+        bool PopBackVisible { get; set; }
+
+        [Export ("mapPoint")]
+        YMKMapPoint MapPoint { get; set; }
+    }
 
 
     [BaseType (typeof (YMKTileOverlayView))]
@@ -184,13 +278,139 @@ namespace YMapBinding
         void StopAutoUpdate ();
     }
 
+    [BaseType (typeof (YMKOverlay))]
+    public partial interface YMKRouteOverlay : YMKOverlay {
 
+        [Export ("distance")]
+        float Distance { get; set; }
 
-//    [BaseType (typeof (NSObject))]
-//    [Model][Protocol]
-//    interface UIAccelerometerDelegate {
-//        [Export ("accelerometer:didAccelerate:")]
-//        void DidAccelerate (UIAccelerometer accelerometer, UIAcceleration acceleration);
+        [Export ("time")]
+        float Time { get; set; }
+
+        [Export ("pointCount")]
+        uint PointCount { get; }
+
+        [Export ("nodeInfoCount")]
+        uint NodeInfoCount { get; }
+
+//        [Export ("coordinate")]
+//        CLLocationCoordinate2D Coordinate { get; }
+//
+//        [Export ("boundingMapRect")]
+//        YMKMapRect BoundingMapRect { get; }
+
+        [Export ("delegate", ArgumentSemantic.Assign)]
+        YMKRouteOverlayDelegate Delegate { get; set; }
+
+        [Static, Export ("routeWithYdfXmlString:")]
+        YMKRouteOverlay RouteWithYdfXmlString (string ydf);
+
+        [Static, Export ("routeWithYdfJsonString:")]
+        YMKRouteOverlay RouteWithYdfJsonString (string ydf);
+
+        [Static, Export ("routeWithYdfJsonString:StartPos:withGoalPos:")]
+        YMKRouteOverlay RouteWithYdfJsonString (string ydf, CLLocationCoordinate2D sp, CLLocationCoordinate2D gp);
+
+        [Export ("initWithData:")]
+        IntPtr Constructor (NSObject data);
+
+        [Export ("initWithAppid:")]
+        IntPtr Constructor (string appid);
+
+        [Export ("setRouteStartPos:withGoalPos:withTraffic:")]
+        void SetRouteStartPos (CLLocationCoordinate2D sp, CLLocationCoordinate2D gp, int traffic);
+
+        [Export ("search")]
+        bool Search ();
+
+//        [Export ("getRouteNodeInfoWithIndex:")]
+//        YMKRouteNodeInfo GetRouteNodeInfoWithIndex (int index);
+//
+//        [Export ("intersectsMapRect:")]
+//        bool IntersectsMapRect (YMKMapRect mapRect);
+
+        [Export ("getData")]
+        NSObject GetData { get; }
+
+        [Export ("startTitle")]
+        string StartTitle { set; }
+
+        [Export ("goalTitle")]
+        string GoalTitle { set; }
+
+        [Export ("getStartTitle")]
+        string GetStartTitle { get; }
+
+        [Export ("getGoalTitle")]
+        string GetGoalTitle { get; }
+    }
+
+    [BaseType (typeof (YMKOverlayView))]
+    public partial interface YMKRouteOverlayView {
+
+        [Export ("routeOverlay")]
+        YMKRouteOverlay RouteOverlay { get; }
+
+        [Export ("startPinVisible")]
+        bool StartPinVisible { get; set; }
+
+        [Export ("goalPinVisible")]
+        bool GoalPinVisible { get; set; }
+
+        [Export ("routePinVisible")]
+        bool RoutePinVisible { get; set; }
+
+        [Export ("initWithRouteOverlay:")]
+        IntPtr Constructor (YMKRouteOverlay overlay);
+    }
+
+//    [BaseType (typeof (CLLocationManagerDelegate))]
+//    public partial interface YMKNaviController : CLLocationManagerDelegate {
+//
+//        [Export ("delegate", ArgumentSemantic.Assign)]
+//        YMKNaviControllerDelegate Delegate { get; set; }
+//
+//        [Export ("initWithRouteOverlay:")]
+//        IntPtr Constructor (YMKRouteOverlay routeOverlay);
+//
+//        [Export ("start"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 44)]
+//        bool Start { get; }
+//
+//        [Export ("stop"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 45)]
+//        bool Stop { get; }
+//
+//        [Export ("getDistanceOfRemainder"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 46)]
+//        double GetDistanceOfRemainder { get; }
+//
+//        [Export ("getTotalDistance"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 47)]
+//        double GetTotalDistance { get; }
+//
+//        [Export ("getRemainderDistance"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 48)]
+//        double GetRemainderDistance { get; }
+//
+//        [Export ("getTimeOfRemainder"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 49)]
+//        double GetTimeOfRemainder { get; }
+//
+//        [Export ("getTotalTime"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 50)]
+//        double GetTotalTime { get; }
+//
+//        [Export ("getNowPointByCoordinate"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 52)]
+//        CLLocationCoordinate2D GetNowPointByCoordinate { get; }
+//
+//        [Export ("checkSpeed")]
+//        void CheckSpeed ();
+//
+//        [Export ("aRKViewController"), Verify ("ObjC method massaged into setter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 55)]
+//        YARKViewController ARKViewController { set; }
+//
+//        [Export ("mapView"), Verify ("ObjC method massaged into setter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 56)]
+//        YMKMapView MapView { set; }
+//
+//        [Export ("getNextNodeInfo"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 57)]
+//        YMKRouteNodeInfo GetNextNodeInfo { get; }
+//
+//        [Export ("getCurrentNodeInfo"), Verify ("ObjC method massaged into getter property", "/Users/hrnv/Downloads/201401/mapsdk_ios/YMap/YMapKit.framework/Headers/YMKNaviController.h", Line = 58)]
+//        YMKRouteNodeInfo GetCurrentNodeInfo { get; }
 //    }
 
 }

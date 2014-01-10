@@ -3,6 +3,12 @@ using MonoTouch.CoreLocation;
 
 namespace YMapBinding
 {
+    public class TrafficType
+    {
+        public static readonly int TRAFFIC_CAR = 0;       //車
+        public static readonly int TRAFFIC_WALK = 1;      //徒歩
+    }
+
     public enum YMKMapType : uint {
         Standard = 0,
         Satellite,
