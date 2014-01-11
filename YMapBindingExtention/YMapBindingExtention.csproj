@@ -50,5 +50,6 @@
     <Compile Include="YMKRelayRouteOverlayDelegate.cs" />
     <Compile Include="YMKRelayMapViewDelegate.cs" />
     <Compile Include="BasicAnnotation.cs" />
+    <Compile Include="YMKRelayNaviControllerDelegate.cs" />
   </ItemGroup>
 </Project>
