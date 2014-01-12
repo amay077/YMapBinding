@@ -463,9 +463,9 @@ namespace YMapBinding
 
 	[BaseType (typeof (UIViewController))]
 	public interface YARKViewController { // : YMKMapViewDelegate, NavigationMgrDelegate, POIViewDelegate {
-		//(void) setCurrentPos:(CLLocation*)loc
-		[Export("setCurrentPos")]
-		CLLocation CurrentPos { set; }
+//		//(void) setCurrentPos:(CLLocation*)loc
+//		[Export("currentPos")]
+//		CLLocation CurrentPos { set; }
 	}
 
 }
