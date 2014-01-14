@@ -442,18 +442,33 @@ namespace YMapBinding
 	}
 
 	//@protocol NavigationMgrDelegate
-	[Model, BaseType (typeof (NSObject))]
-	public partial interface NavigationMgrDelegate {
-		//- (void) NavigationMgrUpdated;
-		[Export ("NavigationMgrUpdated:")]
-		void NavigationMgrUpdated();
-	}
+    [Model]
+    public partial interface NavigationMgrDelegate {
+
+        [Export ("NavigationMgrUpdated")]
+        void NavigationMgrUpdated();
+    }
 
 	//@protocol POIViewDelegate <NSObject>
-	[Model, BaseType (typeof (NSObject))]
-	public partial interface POIViewDelegate {
-		//- (void) poiView:(POIView*)poiView onPick:(int)index;
-	}
+    [Model, BaseType (typeof (NSObject))]
+    public partial interface POIViewDelegate {
+        [Export ("poiView:onPick:")]
+        void OnPick (POIView poiView, int index);
+    }
+
+    [BaseType (typeof (UIView))]
+    public partial interface POIView {
+
+//        [Export ("naviMgr", ArgumentSemantic.Retain)]
+//        NavigationMgr NaviMgr { get; set; }
+
+        [Export ("delegate", ArgumentSemantic.Assign)]
+        POIViewDelegate Delegate { get; set; }
+
+        [Export ("updateLocation")]
+        void UpdateLocation ();
+    }
+
 
 //	//@interface NavigationMgr : NSObject <DeviceStateDelegate> {
 //	[BaseType (typeof (NSObject))]
@@ -461,12 +476,84 @@ namespace YMapBinding
 //
 //	}
 
-	[BaseType (typeof (UIViewController))]
-	public interface YARKViewController { // : YMKMapViewDelegate, NavigationMgrDelegate, POIViewDelegate {
-//		//(void) setCurrentPos:(CLLocation*)loc
-//		[Export("currentPos")]
-//		CLLocation CurrentPos { set; }
-	}
+//    [BaseType (typeof (UIViewController))]
+//    interface YARKViewController : YMKMapViewDelegate, NavigationMgrDelegate, POIViewDelegate {
+////        [Export ("init:")]
+////        IntPtr Constructor ();
+//
+////		//(void) setCurrentPos:(CLLocation*)loc
+////		[Export("currentPos")]
+////		CLLocation CurrentPos { set; }
+//	}
+
+
+    [BaseType (typeof (UIViewController))]
+    public partial interface YARKViewController : NavigationMgrDelegate, YMKMapViewDelegate, POIViewDelegate {
+
+        [Export ("currentPos")]
+        CLLocation CurrentPos { set; }
+
+        [Export ("inclination")]
+        float Inclination { get; }
+
+        [Export ("azimuth")]
+        float Azimuth { get; }
+
+        [Export ("arrowA")]
+        int ArrowA { get; set; }
+
+        [Export ("arrowR")]
+        int ArrowR { get; set; }
+
+        [Export ("arrowG")]
+        int ArrowG { get; set; }
+
+        [Export ("arrowB")]
+        int ArrowB { get; set; }
+
+        [Export ("delegate", ArgumentSemantic.Assign)]
+        YARKViewDelegate Delegate { get; set; }
+
+        [Export ("addPOI:::::")]
+        int AddPOI (double lat, double lon, UIImage icon, int x, int y);
+
+        [Export ("removePOI:")]
+        void RemovePOI (int index);
+
+        [Export ("clearPOI")]
+        void ClearPOI ();
+
+        [Export ("destination")]
+        int Destination { set; }
+
+        [Export ("route")]
+        NSObject [] Route { set; }
+
+//        [Export ("setRoute:Count:")]
+//        void SetRoute ([unmapped: pointer: Pointer] route, int cnt);
+
+        [Static, Export ("arViewControllerAvailable")]
+        bool ArViewControllerAvailable { get; }
+
+        [Export ("hide")]
+        bool Hide { get; }
+
+        [Export ("addView:")]
+        void AddView (UIView value);
+
+        [Export ("submapHidden:")]
+        void SubmapHidden (bool hide);
+
+        [Export ("isSubmapHidden")]
+        bool IsSubmapHidden { get; }
+    }
+
+    [Model, BaseType (typeof (NSObject))]
+    public partial interface YARKViewDelegate {
+
+        [Export ("touchPOI:")]
+        void touchPOI (int index);
+    }
 
 }
 
